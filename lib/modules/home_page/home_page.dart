@@ -6,6 +6,7 @@ import 'package:news_app/modules/home_page/components/latest_news_scrollview.dar
 import 'package:news_app/modules/home_page/components/searched_news_list.dart';
 import 'package:news_app/modules/home_page/home_store.dart';
 import 'package:news_app/values/constants.dart';
+import 'package:news_app/values/strings.dart';
 import 'package:provider/provider.dart';
 
 class HomePage extends StatelessWidget {
@@ -38,11 +39,11 @@ class HomePage extends StatelessWidget {
                           height: kToolbarHeight,
                         ),
                         Text(
-                          'Discover',
+                          AppStrings.discover,
                           style: Theme.of(context).textTheme.headlineMedium,
                         ),
                         Text(
-                          'News from all over the world.',
+                          AppStrings.newsFromAllOverTheWorld,
                           style: Theme.of(context).textTheme.titleLarge,
                         ),
                         Padding(
@@ -52,16 +53,17 @@ class HomePage extends StatelessWidget {
                           child: TextField(
                             controller: homeStore.searchController,
                             textInputAction: TextInputAction.search,
-
+                            onChanged: (value) => homeStore.searchText = value,
+                            onTapOutside: (_) =>
+                                FocusScope.of(context).unfocus(),
                             decoration: InputDecoration(
-                              hintText: 'Search News...',
+                              hintText: AppStrings.searchNewsHintText,
                               suffixIcon: Observer(
                                 builder: (_) {
                                   return Visibility(
                                     visible: homeStore.isSearchOn,
                                     child: IconButton(
-                                      onPressed:
-                                          homeStore.searchController.clear,
+                                      onPressed: homeStore.clearTextField,
                                       icon: const Icon(Icons.clear),
                                     ),
                                   );
@@ -93,12 +95,14 @@ class HomePage extends StatelessWidget {
                             horizontal: AppConstants.defaultPadding,
                           ),
                           child: Text(
-                            'Latest News',
+                            AppStrings.latestNews,
                             style: Theme.of(context).textTheme.titleLarge,
                           ),
                         ),
                         const SizedBox(
-                            height: 280, child: LatestNewsScrollView(),),
+                          height: 280,
+                          child: LatestNewsScrollView(),
+                        ),
                       ],
                     ),
                   ),

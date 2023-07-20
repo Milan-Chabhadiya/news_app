@@ -16,7 +16,7 @@ class NewsTile extends StatelessWidget {
       borderRadius: BorderRadius.circular(15),
       child: Container(
         height: 130,
-        width: MediaQuery.of(context).size.width,
+        width: context.screenWidth,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),
           // color: Colors.grey.shade100,

@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:news_app/values/strings.dart';
 
 class NaNetworkImage extends StatelessWidget {
-  const NaNetworkImage({required this.url, this.height, this.width, super.key, this.fit});
+  const NaNetworkImage({
+    required this.url,
+    this.height,
+    this.width,
+    super.key,
+    this.fit,
+  });
   final String url;
   final double? height;
   final double? width;
@@ -31,7 +38,7 @@ class NaNetworkImage extends StatelessWidget {
         );
       },
       errorBuilder: (_, __, ___) => const Center(
-        child: Text('Error'),
+        child: Text(AppStrings.error),
       ),
     );
   }

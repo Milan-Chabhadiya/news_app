@@ -4,6 +4,7 @@ import 'package:news_app/modules/home_page/components/news_tile.dart';
 import 'package:news_app/modules/home_page/home_store.dart';
 import 'package:news_app/values/constants.dart';
 import 'package:news_app/values/enumeration.dart';
+import 'package:news_app/values/strings.dart';
 import 'package:provider/provider.dart';
 
 class SearchedNewsList extends StatelessWidget {
@@ -31,14 +32,14 @@ class SearchedNewsList extends StatelessWidget {
                       onPressed: () => searchStore
                         ..reset()
                         ..fetchItems(homeStore.fetchSearchedNews),
-                      child: const Text('Retry'),
+                      child: const Text(AppStrings.retry),
                     )
                   ],
                 ),
               );
             case StoreState.success:
               if (searchStore.maxPages == 0 && searchStore.itemList.isEmpty) {
-                return const Center(child: Text('No Search Found'));
+                return const Center(child: Text(AppStrings.noSearchFound));
               }
               return ListView.separated(
                 separatorBuilder: (_, __) => const SizedBox(
@@ -46,7 +47,9 @@ class SearchedNewsList extends StatelessWidget {
                 ),
                 shrinkWrap: true,
                 padding: const EdgeInsets.symmetric(
-                    horizontal: AppConstants.defaultPadding, vertical: 8,),
+                  horizontal: AppConstants.defaultPadding,
+                  vertical: 8,
+                ),
                 controller: searchStore.scrollController,
                 itemBuilder: (context, index) {
                   return NewsTile(

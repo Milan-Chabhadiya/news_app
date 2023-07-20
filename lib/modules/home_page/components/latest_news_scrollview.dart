@@ -4,6 +4,7 @@ import 'package:news_app/modules/home_page/components/latest_article_tile.dart';
 import 'package:news_app/modules/home_page/home_store.dart';
 import 'package:news_app/values/constants.dart';
 import 'package:news_app/values/enumeration.dart';
+import 'package:news_app/values/strings.dart';
 import 'package:provider/provider.dart';
 
 class LatestNewsScrollView extends StatelessWidget {
@@ -60,7 +61,7 @@ class LatestNewsScrollView extends StatelessWidget {
                     ElevatedButton(
                       onPressed: () =>
                           latestNewsStore.fetchItems(homeStore.fetchLatestNews),
-                      child: const Text('Retry'),
+                      child: const Text(AppStrings.retry),
                     ),
                   ],
                 ),

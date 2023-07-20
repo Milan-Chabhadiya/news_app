@@ -34,7 +34,10 @@ abstract class _HomeStore with Store {
 
   TextEditingController searchController = TextEditingController();
 
-  final debouncer = Debouncer(1500.ms);
+  @observable
+  String searchText = '';
+
+  final debouncer = Debouncer(500.ms);
 
   // this index is for Catagory Menu
   @observable
@@ -43,19 +46,10 @@ abstract class _HomeStore with Store {
   @observable
   List<String> categoryList = AppStrings.categoryList;
 
-  // if this bool is true then show searchedNewsList else show other two lis on screen
+  // if this bool is true then show searchedNewsList else
+  // show other two list on screen
   @observable
   bool isSearchOn = false;
-
-  @computed
-  List<Article> get latestNewsList => latestNewsPaginationStore.itemList;
-
-  @computed
-  List<Article> get categoryWiseNewsList =>
-      categoryWiseNewsPaginationStore.itemList;
-
-  @computed
-  List<Article> get searchedNewsList => searchedNewsPaginationStore.itemList;
 
   void onInit() {
     latestNewsPaginationStore.fetchItems(fetchLatestNews);
@@ -68,11 +62,13 @@ abstract class _HomeStore with Store {
     disposers.add(reactionDisposer);
     latestNewsPaginationStore.addListener(40, fetchLatestNews);
     categoryWiseNewsPaginationStore.addListener(40, fetchCategoryWiseNews);
-    searchController.addListener(() {
+
+    final searchReactionDisposer = reaction((_) => searchText, (_) {
       searchedNewsPaginationStore
         ..reset()
         ..fetchItems(fetchSearchedNews);
     });
+    disposers.add(searchReactionDisposer);
   }
 
   Future<BaseModel<List<Article>>> fetchLatestNews(
@@ -101,12 +97,13 @@ abstract class _HomeStore with Store {
     int pageSize,
   ) async {
     final completer = Completer<BaseModel<List<Article>>>();
-    if (searchController.text.trim().isNotEmpty) {
+    final searchKeyword = searchText.trim();
+    if (searchKeyword.isNotEmpty) {
+      isSearchOn = true;
       debouncer.call(() {
-        isSearchOn = true;
         completer.complete(
           repository.getSearchedArticles(
-            query: searchController.text.trim().toLowerCase(),
+            query: searchKeyword,
             page: page,
             pageSize: pageSize,
           ),
@@ -117,6 +114,11 @@ abstract class _HomeStore with Store {
       isSearchOn = false;
     }
     return completer.future;
+  }
+
+  void clearTextField() {
+    searchController.clear();
+    searchText = '';
   }
 
   void dispose() {

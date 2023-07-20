@@ -1,4 +1,11 @@
 class AppStrings {
+  static const discover = 'Discover';
+  static const newsFromAllOverTheWorld = 'News from all over the world.';
+  static const searchNewsHintText = 'Search News...';
+  static const latestNews = 'Latest News';
+  static const retry = 'Retry';
+  static const error = 'Error';
+  static const noSearchFound = 'No Search Found';
   static const List<String> categoryList = [
     'Business',
     'Economics',

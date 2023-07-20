@@ -32,11 +32,11 @@ class ServerError implements Exception {
       case DioExceptionType.receiveTimeout:
         _errorMessage = 'Receive timeout in connection';
       case DioExceptionType.badResponse:
-        _errorMessage =
-            'BadResponse: Received invalid status code: ${error.response!.statusCode}';
+        _errorMessage = 'BadResponse: Received invalid status code:'
+            ' ${error.response!.statusCode}';
       case DioExceptionType.badCertificate:
-        _errorMessage =
-            'BadCertificate: Received invalid status code: ${error.response!.statusCode}';
+        _errorMessage = 'BadCertificate: Received invalid status code:'
+            ' ${error.response!.statusCode}';
       case DioExceptionType.sendTimeout:
         _errorMessage = 'Receive timeout in send request';
     }
